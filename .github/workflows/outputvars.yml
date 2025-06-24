@@ -27,3 +27,18 @@ jobs:
         run: |
           Set-PSRepository PSGallery -InstallationPolicy Trusted
           Install-Module SqlServer, PSScriptAnalyzer
+  example_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set output variable
+        id: step1
+        run: |
+          echo "message=Hello from step 1" >> $GITHUB_OUTPUT
+          echo "MY_VAR=some_value" >> $GITHUB_OUTPUT
+          echo "::set-output name=another_var::some_other_value"
+
+      - name: Get output variable
+        run: |
+          echo "Message: ${{ steps.step1.outputs.message }}"
+          echo "MY_VAR: ${{ steps.step1.outputs.MY_VAR }}"
+          echo "Another var: ${{ steps.step1.outputs.another_var }}"
